@@ -3,7 +3,7 @@
  * Plugin Name:			FloristPress
  * Plugin URI:			https://docs.floristpress.org/
  * Description:			Provides standardized features for floristry websites – built by florists, for florists.
- * Version:				7.2.0
+ * Version:				7.3.0
  * Requires at least:	6.0
  * Requires PHP:		7.4
  * Requires Plugins:	woocommerce

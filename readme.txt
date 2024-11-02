@@ -5,7 +5,7 @@ Tags: woocommerce,florist,ecommerce
 Requires at least: 6.0
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 7.2.0
+Stable tag: 7.3.0
 License: GPL-3.0-or-later
 License URI: https://www.gnu.org/licenses/gpl.html
 
@@ -136,11 +136,11 @@ We believe so! Check it out [here](https://docs.floristpress.org/).
 
 * [WooCommerce](https://wordpress.org/plugins/woocommerce/)
 
-= What plugins/themes are compatible/integrated?
+= What plugins/themes are compatible/integrated? =
 
 Check the current listing in our documentation: [Third Party Compatibility](https://docs.floristpress.org/3pc/)
 
-= The plugin/theme I want to use isn't compatible, what do I do?
+= The plugin/theme I want to use isn't compatible, what do I do? =
 
 We recommend a double-headed approach:
 
@@ -153,6 +153,10 @@ Then, reach out to the plugin or theme's developer and ask them to integrate wit
 = How do I request or upvote a feature? =
 
 If there's a feature missing, please let us know on [Canny](https://floristpress.canny.io/) - we'd love to hear your feedback and know what you want to see added next!
+
+= How can I report security bugs? =
+
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/bakkbone-florist-companion)
 
 = How do I get support? =
 
@@ -181,3 +185,6 @@ If you require assistance setting up the plugin and/or your website, please cont
 Changelog is kept at [floristpress.org](https://www.floristpress.org/changelog/)
 
 == Upgrade Notice ==
+
+= 7.3.0
+Patches an XSS vulnerability with the delivery date filter field on the Orders backend page

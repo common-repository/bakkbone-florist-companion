@@ -76,17 +76,17 @@ class BKF_Delivery_Date_Filter {
 					}
 					$meta_query[] = array(
 						'meta_key' => '_delivery_timestamp',
-						'value'	=> strtotime($_GET['dd_filter']),
+						'value'	=> strtotime(sanitize_text_field($_GET['dd_filter'])),
 					);
 					$query->set( 'meta_query', $meta_query );
 				}
 			}
 		}
 	}
-	
+
 	function status_filters($views){
 		$hpos = OrderUtil::custom_orders_table_usage_is_enabled();
-		
+
 		if($hpos){
 			if(get_current_screen()->id == wc_get_page_screen_id( 'shop-order' )){
 				$statuslistfull = wc_get_order_statuses();
@@ -97,29 +97,29 @@ class BKF_Delivery_Date_Filter {
 				$fullargs = array('status' => $fullstatus, 'limit' => '-1');
 				$fullquery = wc_get_orders($fullargs);
 				$fullcount = count($fullquery);
-		
+
 				$allstatus = array("wc-processing","wc-made","wc-collect","wc-out","wc-scheduled","wc-new","wc-accept","wc-invoiced","wc-phone-draft");
-		
+
 				$url_to_redirect_full = add_query_arg(array('page' => 'wc-orders', 'status' => 'full'), admin_url('admin.php'));
 				$url_to_redirect_all = add_query_arg(array('page' => 'wc-orders', 'status' => 'all'), admin_url('admin.php'));
 				$text_full_active = '<a href="%s" class="current">'.esc_html__('All', 'bakkbone-florist-companion').' <span class="count">(%d)</span></a>';
 				$text_all_active = '<a href="%s" class="current">'.esc_html__('Active', 'bakkbone-florist-companion').' <span class="count">(%d)</span></a>';
 				$text_full_inactive = '<a href="%s">'.esc_html__('All', 'bakkbone-florist-companion').' <span class="count">(%d)</span></a>';
 				$text_all_inactive = '<a href="%s">'.esc_html__('Active', 'bakkbone-florist-companion').' <span class="count">(%d)</span></a>';
-		
+
 				$allquery = [];
 				foreach($fullquery as $full){
 					if(in_array('wc-'.$full->get_status(), $allstatus)){
 						$allquery[] = $full;
 					}
 				}
-				$allcount = count($allquery);				
-				
+				$allcount = count($allquery);
+
 				$status = 'all';
 				if(isset($_GET['status'])){
 					$status = $_GET['status'];
 				}
-				
+
 				if($status == 'all') {
 					$views['all'] = sprintf($text_all_active, $url_to_redirect_all, bkf_all_count());
 					$views['full'] = sprintf($text_full_inactive, $url_to_redirect_full, bkf_full_count());
@@ -150,16 +150,16 @@ class BKF_Delivery_Date_Filter {
 			$fullargs = array('post_type' => 'shop_order', 'post_status' => $fullstatus, 'numberposts' => '-1');
 			$fullquery = get_posts($fullargs);
 			$fullcount = count($fullquery);
-		
+
 			$allstatus = array("wc-processing","wc-made","wc-collect","wc-out","wc-scheduled","wc-new","wc-accept","wc-invoiced","wc-phone-draft");
-		
+
 			$url_to_redirect_full = add_query_arg(array('post_type' => 'shop_order', 'show_all' => 'true'), admin_url('edit.php'));
 			$url_to_redirect_all = add_query_arg(array('post_type' => 'shop_order'), admin_url('edit.php'));
 			$text_full_active = '<a href="%s" class="current" aria-current="page">'.esc_html__('All', 'bakkbone-florist-companion').' <span class="count">(%d)</span></a>';
 			$text_all_active = '<a href="%s" class="current" aria-current="page">'.esc_html__('Active', 'bakkbone-florist-companion').' <span class="count">(%d)</span></a>';
 			$text_full_inactive = '<a href="%s">'.esc_html__('All', 'bakkbone-florist-companion').' <span class="count">(%d)</span></a>';
 			$text_all_inactive = '<a href="%s">'.esc_html__('Active', 'bakkbone-florist-companion').' <span class="count">(%d)</span></a>';
-		
+
 			$allquery = [];
 			foreach($fullquery as $full){
 				if(in_array($full->post_status, $allstatus)){
@@ -167,7 +167,7 @@ class BKF_Delivery_Date_Filter {
 				}
 			}
 			$allcount = count($allquery);
-		
+
 			if($post_type == 'shop_order'){
 				if($show_all == 'true'){
 					$views['all'] = sprintf($text_all_inactive, $url_to_redirect_all, bkf_all_count());
@@ -182,13 +182,13 @@ class BKF_Delivery_Date_Filter {
 			}
 			return $views;
 		}
-		
+
 	}
 
 	function dd_filter_display(){
 		global $pagenow, $post_type;
 		if( ('shop_order' === $post_type && 'edit.php' === $pagenow) || get_current_screen()->id == wc_get_page_screen_id( 'shop-order' ) ) {
-			$current = isset($_GET['dd_filter'])? $_GET['dd_filter'] : '';
+			$current = isset($_GET['dd_filter'])? esc_html(sanitize_text_field($_GET['dd_filter'])) : '';
 			echo '<input type="text" name="dd_filter" id="dd_filter" placeholder="'.get_option('bkf_ddi_setting')['ddt'].'" value="'.$current.'" />';
 			?>
 	<script id="bkf_dd_filter">
